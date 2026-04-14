@@ -8,7 +8,7 @@ With the continuous advancement of deep learning, artificial intelligence has ac
 We first pretrain the model on the [LRS2 dataset](https://www.robots.ox.ac.uk/~vgg/data/lip_reading/lrs2.html) using the implementation available at [deep_avsr](https://github.com/smeetrs/deep_avsr?tab=readme-ov-file#). 
 
 The pretrained model is then fine-tuned on our self-recorded Chinese corpus in 20 people with 10mins for each person. Recorded following the dataset collection methodology proposed in [VoiceBank-2023: A Multi-Speaker Mandarin Speech Corpus for Constructing Personalized TTS Systems for the Speech Impaired](https://arxiv.org/abs/2308.14763) . To ensure compatibility with the original framework and preserve the consistency of the training setting, the Chinese dataset is recorded and organized according to the specifications of the original dataset. The detailed recording conditions and dataset format are presented below.
-* Videofile - .mp4 file
+* Videofile: .mp4 file
 * Video: 25 fps, 160x160 RGB frames, Mouth approx. in center (face size should be comparable to frame size)
 * Audio: Mono audio, 16000 Hz sample rate
 
