@@ -12,5 +12,7 @@ The pretrained model is then fine-tuned on our self-recorded Chinese corpus in 2
 * Video: 25 fps, 160x160 RGB frames, Mouth approx. in center (face size should be comparable to frame size)
 * Audio: Mono audio, 16000 Hz sample rate
 
+## Record step
+
 ## contributor
 - Huang Yu Min
