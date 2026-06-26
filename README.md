@@ -13,8 +13,6 @@ The pretrained model is then fine-tuned on our self-recorded Chinese corpus in 2
 * Audio: Mono audio, 16000 Hz sample rate
 
 ## Record step
-How To Use
-
 1. Install the required software and dependencies, including GStreamer, FFmpeg, Python, and the Python packages required by the FaceCrop program.
 
 2. Open the FaceRecord directory in Visual Studio Code Insiders. Make sure that the camera and microphone are working properly, then compile and run the C recording program.
