@@ -13,6 +13,15 @@ The pretrained model is then fine-tuned on our self-recorded Chinese corpus in 2
 * Audio: Mono audio, 16000 Hz sample rate
 
 ## Record step
+The recording program was written in C and executed in Visual Studio Code Insiders. GStreamer was used to construct the audio-visual recording pipeline. When the program is launched, the computer’s camera and microphone are activated. After the speaker finishes recording the assigned text, the system sequentially generates raw audio-visual files named 00001.mp4, 00002.mp4, 00003.mp4, and so on. Each file contains both the recorded video and its corresponding audio.
+
+After all texts have been recorded, the MP4 files are batch-processed using a separate preprocessing program written in Python. First, FFmpeg is used to standardize the frame rate of the original videos to 25 fps and resample the audio to 16 kHz. The program then reads each video frame by frame and passes every frame to the YOLOv8 Face model to obtain the bounding-box coordinates of the speaker’s face. ByteTrack is also used to continuously track the same face throughout the video.
+
+To prevent the cropped video from shaking because of speaker movement or minor detection errors, the facial coordinates of consecutive frames are smoothed. The cropping region is then moderately expanded around the detected face to preserve the complete facial and mouth regions. Each frame is subsequently cropped and resized to 160 × 160 pixels.
+
+All processed frames are first combined into a temporary video without audio. FFmpeg is then used to merge the cropped video with the 16 kHz audio extracted from the original video, producing the final processed MP4 file. For example, after the original 00001.mp4 has been processed, another file with the same name, 00001.mp4, is generated. However, its video content has been converted into 160 × 160 cropped facial images while retaining the synchronized audio.
+
+Finally, all processed videos are organized according to speaker ID and paired with their corresponding Chinese transcripts and video identifiers. This process produces a standardized Chinese audio-visual speech dataset with speaker labels and text annotations.
 
 ## contributor
 - Huang Yu Min
