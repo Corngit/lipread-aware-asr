@@ -13,15 +13,25 @@ The pretrained model is then fine-tuned on our self-recorded Chinese corpus in 2
 * Audio: Mono audio, 16000 Hz sample rate
 
 ## Record step
-The recording program was written in C and executed in Visual Studio Code Insiders. GStreamer was used to construct the audio-visual recording pipeline. When the program is launched, the computer’s camera and microphone are activated. After the speaker finishes recording the assigned text, the system sequentially generates raw audio-visual files named 00001.mp4, 00002.mp4, 00003.mp4, and so on. Each file contains both the recorded video and its corresponding audio.
+How To Use
 
-After all texts have been recorded, the MP4 files are batch-processed using a separate preprocessing program written in Python. First, FFmpeg is used to standardize the frame rate of the original videos to 25 fps and resample the audio to 16 kHz. The program then reads each video frame by frame and passes every frame to the YOLOv8 Face model to obtain the bounding-box coordinates of the speaker’s face. ByteTrack is also used to continuously track the same face throughout the video.
+1. Install the required software and dependencies, including GStreamer, FFmpeg, Python, and the Python packages required by the FaceCrop program.
 
-To prevent the cropped video from shaking because of speaker movement or minor detection errors, the facial coordinates of consecutive frames are smoothed. The cropping region is then moderately expanded around the detected face to preserve the complete facial and mouth regions. Each frame is subsequently cropped and resized to 160 × 160 pixels.
+2. Open the FaceRecord directory in Visual Studio Code Insiders. Make sure that the camera and microphone are working properly, then compile and run the C recording program.
 
-All processed frames are first combined into a temporary video without audio. FFmpeg is then used to merge the cropped video with the 16 kHz audio extracted from the original video, producing the final processed MP4 file. For example, after the original 00001.mp4 has been processed, another file with the same name, 00001.mp4, is generated. However, its video content has been converted into 160 × 160 cropped facial images while retaining the synchronized audio.
+3. After the program starts, the speaker records the assigned text. Each completed recording is saved as a raw audio-visual file named sequentially as 00001.mp4, 00002.mp4, 00003.mp4, and so on.
 
-Finally, all processed videos are organized according to speaker ID and paired with their corresponding Chinese transcripts and video identifiers. This process produces a standardized Chinese audio-visual speech dataset with speaker labels and text annotations.
+4. The recorded MP4 files are automatically saved to the input directory used by FaceCrop, so no manual file transfer is required. Before preprocessing, confirm that the videos have been saved successfully.
+
+5. Open the FaceCrop directory in Visual Studio Code. Confirm that test_face_crop.py, yolov8n-face-lindevs.pt, and bytetrack.yaml are present, and verify that the input and output paths in the program are configured correctly. Then, run test_face_crop.py.
+
+6. The program automatically batch-processes the videos in the input directory. It converts the videos to 25 fps, resamples the audio to 16 kHz, uses YOLOv8 Face and ByteTrack to detect and track the speaker’s face, and crops and resizes each frame to 160 × 160 pixels.
+
+7. After preprocessing, the program merges the cropped video with the original audio and saves the processed MP4 files in the specified output directory. The output files retain their original filenames and can then be organized by speaker ID and corresponding transcript for model training and testing.
+
+Why Use Visual Studio Insiders?
+
+This project uses Visual Studio Insiders because the C compiler, related extensions, and the GStreamer header and library paths were originally configured in the Insiders environment. This does not mean that the program can only run in Insiders. When using the stable version of Visual Studio Code, the same C/C++ extension, compiler, and GStreamer Development package must be installed. The correct include paths, library paths, and environment variables must also be added to the .vscode configuration before the program can be compiled and executed properly.
 
 ## contributor
 - Huang Yu Min
