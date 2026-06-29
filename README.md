@@ -33,3 +33,5 @@ This project uses Visual Studio Insiders because the C compiler, related extensi
 
 ## contributor
 - Huang Yu Min
+- Jiang Jun You
+- Kao Chen Hsi
